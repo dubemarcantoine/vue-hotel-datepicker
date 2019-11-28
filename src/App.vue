@@ -1,7 +1,13 @@
 <template>
   <div id="app" style="text-align: left; padding: 10vw">
     <div>
-
+      <div class="box">
+        <h3>With prices</h3>
+        <DatePicker
+          :defaultPrice="123"
+          :priceRanges="priceRanges"
+        />
+      </div>
       <div class="box">
         <h3>Allow check-in and check-out on the same day</h3>
         <DatePicker
@@ -177,6 +183,18 @@
 
     data() {
       return {
+        priceRanges: [
+          {
+            startDate: new Date(2019, 10, 29),
+            endDate: new Date(2019, 11, 1),
+            price: 500
+          },
+          {
+            startDate: new Date(2019, 11, 20),
+            endDate: new Date(2020, 0, 6),
+            price: 200
+          },
+        ],
         ptPT: {
           night: 'Noite',
           nights: 'Noites',

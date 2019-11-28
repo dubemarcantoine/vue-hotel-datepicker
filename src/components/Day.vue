@@ -4,7 +4,7 @@
     .datepicker__month-day(
       @click.prevent.stop='dayClicked(date)'
       @keyup.enter.prevent.stop='dayClicked(date)'
-      v-text='dayNumber'
+      v-html='\'<span class="datepicker-day-number \' + disableDateClass() + \'">\' + dayNumber + \'</span><span class="datepicker-price \' + disableDateClass() + \'">\' + price + \'$</span>\''
       :class='dayClass'
       :style='isToday ? currentDateStyle : ""'
       :tabindex="tabIndex"
@@ -68,7 +68,10 @@ export default {
     },
     currentDateStyle:{
       required: true,
-    }
+    },
+    price: {
+      type: Number,
+    },
   },
 
   data() {
@@ -77,6 +80,7 @@ export default {
       isDisabled: false,
       allowedCheckoutDays: [],
       currentDate: new Date(),
+      htmlValue: this.setHtmlValue(),
     };
   },
 
@@ -117,6 +121,7 @@ export default {
                 this.date,
                 this.addDays(this.checkIn, this.options.minNights)
               ) == -1) {
+            this.htmlValue = this.setHtmlValue();
             return 'datepicker__month-day--selected datepicker__month-day--out-of-range'
         }
 
@@ -125,17 +130,21 @@ export default {
           if ( !this.isDisabled && this.checkIn !== null && this.checkOut == null ) {
             // If the day is one of the allowed check out days and is not highlighted
             if ( this.allowedCheckoutDays.some((i) => this.compareDay(i, this.date) == 0 && !this.isHighlighted) ) {
+              this.htmlValue = this.setHtmlValue();
               return 'datepicker__month-day--allowed-checkout'
             }
             // If the day is one of the allowed check out days and is highlighted
             if ( this.allowedCheckoutDays.some((i) => this.compareDay(i, this.date) == 0 && this.isHighlighted) ) {
+              this.htmlValue = this.setHtmlValue();
               return 'datepicker__month-day--selected datepicker__month-day--allowed-checkout'
             }
             // If the day is not one of the allowed Checkout Days and is highlighted
             if ( !(this.allowedCheckoutDays.some((i) => this.compareDay(i, this.date) == 0 )) && this.isHighlighted) {
+              this.htmlValue = this.setHtmlValue();
               return 'datepicker__month-day--out-of-range datepicker__month-day--selected'
             }
             else {
+              this.htmlValue = this.setHtmlValue();
               return 'datepicker__month-day--out-of-range'
             }
           }
@@ -306,6 +315,13 @@ export default {
         return
       }
     },
+    setHtmlValue() {
+        return `<span class="datepicker-day-number ${(this.isDisabled || !this.price) ? 'price-disabled' : ''}">${this.dayNumber}</span>
+        <span class="datepicker-price ${(this.isDisabled || !this.price) ? 'price-disabled' : ''}">${this.price}$</span>`;
+    },
+    disableDateClass() {
+      return (this.isDisabled || !this.price) ? 'price-disabled' : '';
+    }
   },
 
   beforeMount(){
