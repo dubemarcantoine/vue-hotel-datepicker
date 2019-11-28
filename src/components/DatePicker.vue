@@ -1,6 +1,9 @@
 <template lang='pug'>
   .datepicker__wrapper(v-if='show' v-on-click-outside='clickOutside' @blur="clickOutside")
-    .datepicker__close-button.-hide-on-desktop(v-if='isOpen' @click='hideDatepicker') ＋
+    .datepicker__close-button.-hide-on-desktop(v-if='isOpen' @click='hideDatepicker')
+      img(
+        src="./close_icon.svg"
+      )
     .datepicker__dummy-wrapper(  :class="`${isOpen ? 'datepicker__dummy-wrapper--is-active' : ''}` ")
       date-input(
         :i18n="i18n"
@@ -1022,7 +1025,6 @@
             position: fixed;
             left: 7px;
             top: 5px;
-            transform: rotate(45deg);
         }
 
         &__clear-button {
