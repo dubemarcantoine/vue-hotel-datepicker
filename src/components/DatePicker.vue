@@ -36,18 +36,6 @@
           @click='toggleDatepicker' :class="`${isOpen ? 'datepicker__dummy-wrapper--is-active' : ''}`"
           v-if='isOpen'
         )
-          .datepicker__input(
-            tabindex="0"
-            :class="`${isOpen && checkIn == null ? 'datepicker__dummy-input--is-active' : ''}`"
-            v-text="`${checkIn ? formatDate(checkIn) : i18n['check-in']}`"
-            type="button"
-          )
-          .datepicker__input(
-            tabindex="0"
-            :class="`${isOpen && checkOut == null && checkIn !== null ? 'datepicker__dummy-input--is-active' : ''}`"
-            v-text="`${checkOut ? formatDate(checkOut) : i18n['check-out']}`"
-            type="button"
-          )
       .datepicker__inner
         .datepicker__header
           span.datepicker__month-button.datepicker__month-button--prev.-hide-up-to-tablet(
