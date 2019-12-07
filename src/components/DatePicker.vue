@@ -504,8 +504,8 @@
         let price = this.defaultPrice;
         if (this.priceRanges) {
           this.priceRanges.forEach(priceRange => {
-            if (day.date >= priceRange.startDate && day.date< priceRange.endDate) {
-                price = priceRange.price;
+            if (day.date >= new Date(priceRange.startDate) && day.date < new Date(priceRange.endDate)) {
+                price = +priceRange.pricePerNight;
             }
           });
         }
